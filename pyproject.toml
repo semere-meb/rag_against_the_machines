@@ -1,20 +1,22 @@
 [project]
 name = "rag-against-the-machines"
-version = "0.1.6"
+version = "0.2.0"
 description = "A RAG system that answers queries related to a codebase"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "mypy>=2.1.0",
-    "pytest>=9.0.3",
-]
+dependencies = []
 
-[tool.mypy]
-plugins = []
-mypy_path = "stubs"
 
 [tool.ruff]
 line-length = 79
 [tool.ruff.lint]
 select = ["E", "F", "B", "I"]
+
+[dependency-groups]
+dev = [
+    "flake8>=7.3.0",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.8",
+]
 
