@@ -1,15 +1,15 @@
 SYNC := .synced
-RUFF_PREFIX := $(shell [ -e /etc/NIXOS ] && echo "" || echo "uv run ")
 
 
 run: install
-	uv run python src/main.py
+	uv run python -m src
 
 install: $(SYNC)
 
 $(SYNC): pyproject.toml
-	which uv || pip install uv
+	if ! command -v uv >/dev/null;then pip install uv; fi
 	uv sync
+	unzip ./data/vllm-0.10.1.zip -d ./data/raw/
 	@touch $(SYNC)
 	
 clean:
@@ -21,7 +21,7 @@ clean:
 	rm -rf .venv
 
 lint: $(SYNC)
-	$(RUFF_PREFIX) ruff check .
+	ruff check .
 	uv run flake8 .
 	uv run mypy --strict .
 
@@ -29,10 +29,10 @@ test: $(SYNC)
 	uv run pytest -q
 
 format:
-	$(RUFF_PREFIX) ruff format .
-	$(RUFF_PREFIX) ruff check --fix .
+	ruff format .
+	ruff check --fix .
 
 re: clean run
 
 	
-.PHONY: run cheat install clean lint test format re
+.PHONY: run install clean lint test format re
