@@ -4,7 +4,11 @@ version = "0.2.0"
 description = "A RAG system that answers queries related to a codebase"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "fire>=0.7.1",
+    "pydantic>=2.14.1",
+    "tqdm>=4.70.1",
+]
 
 
 [tool.ruff]
@@ -14,9 +18,8 @@ select = ["E", "F", "B", "I"]
 
 [dependency-groups]
 dev = [
-    "flake8>=7.3.0",
-    "mypy>=2.3.1",
+    "flake8>=7.4.1",
+    "mypy>=2.4.0",
     "pytest>=9.1.1",
-    "ruff>=0.16.8",
+    "ruff>=0.17.1",
 ]
-
