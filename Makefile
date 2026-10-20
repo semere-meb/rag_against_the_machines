@@ -1,15 +1,12 @@
 SYNC := .synced
 
 
-run: install
-	uv run python -m src
-
 install: $(SYNC)
 
 $(SYNC): pyproject.toml
-	if ! command -v uv >/dev/null;then pip install uv; fi
+	@if ! command -v uv >/dev/null;then pip install uv; fi
 	uv sync
-	unzip ./data/vllm-0.10.1.zip -d ./data/raw/
+	@if ! [ -d data/raw/vllm-0.10.1 ];then unzip ./data/vllm-0.10.1.zip -d ./data/raw/; fi
 	@touch $(SYNC)
 	
 clean:
@@ -17,8 +14,10 @@ clean:
 	find . -type d -name "*.egg-info" -exec rm -rf {} +
 	rm -rf .mypy_cache .pytest_cache .ruff_cache
 	rm -rf dist/
-	rm -rf $(SYNC)
-	rm -rf .venv
+
+fclean: clean
+	rm -rf .venv $(SYNC)
+	uv clean
 
 lint: $(SYNC)
 	ruff check .
