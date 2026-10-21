@@ -1,9 +1,5 @@
-from src.indexer import get_all_files
-
-
-def main() -> None:
-    print("Hello from rag")
-
+from src.indexer import Indexer
 
 if __name__ == "__main__":
-    get_all_files()
+    indexer = Indexer()
+    indexer.get_all_files()
