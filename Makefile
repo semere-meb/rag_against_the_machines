@@ -14,6 +14,7 @@ clean:
 	find . -type d -name "*.egg-info" -exec rm -rf {} +
 	rm -rf .mypy_cache .pytest_cache .ruff_cache
 	rm -rf dist/
+	rm -rf $(SYNC)
 
 fclean: clean
 	rm -rf .venv $(SYNC)
@@ -31,7 +32,7 @@ format:
 	ruff format .
 	ruff check --fix .
 
-re: clean run
+re: clean run install
 
 	
 .PHONY: run install clean lint test format re
